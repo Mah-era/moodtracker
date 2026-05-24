@@ -1,0 +1,801 @@
+:root {
+  --ink: #24302b;
+  --muted: #708078;
+  --paper: #fffaf2;
+  --panel: rgba(255, 255, 255, 0.76);
+  --panel-strong: rgba(255, 255, 255, 0.88);
+  --line: rgba(69, 86, 76, 0.14);
+  --leaf: #5f8d78;
+  --leaf-dark: #3f6f5d;
+  --rose: #d98880;
+  --honey: #d8aa58;
+  --sky: #6e9eb3;
+  --lavender: #9189b8;
+  --shadow: 0 24px 70px rgba(76, 63, 43, 0.16);
+  --radius: 8px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 1100px;
+  min-height: 100vh;
+  color: var(--ink);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background:
+    radial-gradient(circle at 18% 14%, rgba(216, 170, 88, 0.18), transparent 30%),
+    radial-gradient(circle at 88% 22%, rgba(110, 158, 179, 0.18), transparent 34%),
+    linear-gradient(145deg, #fff9ef 0%, #eef5ee 58%, #f7eee8 100%);
+}
+
+button,
+input {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+.cornerActions {
+  position: fixed;
+  z-index: 10;
+  top: 20px;
+  right: 22px;
+  display: flex;
+  gap: 8px;
+}
+
+.shell {
+  width: min(1220px, calc(100% - 56px));
+  margin: 0 auto;
+  padding: 18px 0 24px;
+}
+
+.appHeader,
+.checkin,
+.summaryPanel,
+.dashboardPanel {
+  border: 1px solid var(--line);
+  background: var(--panel);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(24px);
+  border-radius: var(--radius);
+}
+
+.appHeader {
+  padding: 18px 24px;
+  margin-bottom: 14px;
+}
+
+.topbar,
+.sectionHeader,
+.dateStrip,
+.entryActions,
+.meterTop,
+.scaleLabels {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.eyebrow {
+  margin: 0 0 6px;
+  color: var(--leaf-dark);
+  font-size: 0.78rem;
+  font-weight: 760;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+h1,
+h2,
+p {
+  margin: 0;
+  letter-spacing: 0;
+}
+
+h1 {
+  font-size: 3.4rem;
+  line-height: 0.94;
+  font-weight: 820;
+}
+
+h2 {
+  font-size: 1rem;
+}
+
+.pageTabs {
+  display: inline-flex;
+  gap: 6px;
+  padding: 6px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.52);
+  margin-right: 82px;
+}
+
+.tabButton {
+  min-width: 112px;
+  min-height: 38px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--muted);
+  font-weight: 800;
+}
+
+.tabButton.isActive {
+  background: var(--leaf);
+  color: white;
+}
+
+.iconButton,
+.dateNav {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.72);
+  color: var(--leaf-dark);
+  display: grid;
+  place-items: center;
+  font-size: 1.3rem;
+  font-weight: 800;
+}
+
+.iconButton:hover,
+.dateNav:hover,
+.secondary:hover {
+  background: rgba(255, 255, 255, 0.94);
+}
+
+.fileButton input,
+.hiddenDate {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.page {
+  display: none;
+}
+
+.page.isActive {
+  display: block;
+}
+
+.app {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 370px;
+  gap: 14px;
+  align-items: start;
+}
+
+.checkin {
+  min-height: 0;
+  padding: 24px;
+  display: grid;
+  align-content: start;
+  gap: 14px;
+}
+
+.dateStrip {
+  justify-content: center;
+}
+
+.selectedDate {
+  min-width: 420px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.65);
+  padding: 11px 18px;
+  color: var(--ink);
+  font-weight: 780;
+}
+
+.softPanel {
+  padding: 22px;
+  border: 1px solid rgba(95, 141, 120, 0.18);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.5);
+}
+
+#saveState,
+#monthCount,
+#weekRange,
+#dashboardCount,
+.panelSub {
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 720;
+}
+
+.moodGrid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 10px;
+  margin: 14px 0;
+}
+
+.moodButton {
+  min-height: 92px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.62);
+  color: var(--ink);
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  gap: 10px;
+  transition: transform 120ms ease, border-color 120ms ease, background 120ms ease;
+}
+
+.moodButton:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.85);
+}
+
+.moodButton[aria-pressed="true"] {
+  border-color: rgba(63, 111, 93, 0.42);
+  outline: 3px solid rgba(95, 141, 120, 0.18);
+  background: rgba(255, 255, 255, 0.92);
+}
+
+.moodDot {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.72);
+  box-shadow: 0 10px 24px rgba(74, 61, 45, 0.12);
+}
+
+.moodName {
+  font-weight: 790;
+}
+
+.meterGroup {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.namajBlock {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.48);
+  padding: 14px;
+  margin-top: 12px;
+}
+
+#namajCount {
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 720;
+}
+
+.namajPills {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.namajPill {
+  min-height: 42px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.62);
+  color: var(--muted);
+  font-weight: 820;
+}
+
+.namajPill[aria-pressed="true"] {
+  background: var(--leaf);
+  border-color: transparent;
+  color: white;
+}
+
+.meterCard {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.58);
+  padding: 14px;
+}
+
+.meterTop label,
+.statLabel {
+  color: var(--muted);
+  font-size: 0.84rem;
+  font-weight: 760;
+}
+
+.meterTop strong {
+  color: var(--leaf-dark);
+  font-size: 1.25rem;
+}
+
+input[type="range"] {
+  width: 100%;
+  accent-color: var(--leaf);
+  margin: 12px 0 6px;
+}
+
+.scaleLabels {
+  color: var(--muted);
+  font-size: 0.76rem;
+  font-weight: 680;
+}
+
+.entryActions {
+  justify-content: flex-start;
+  margin-top: 12px;
+}
+
+.primary,
+.secondary {
+  min-height: 44px;
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  padding: 0 16px;
+  font-weight: 800;
+}
+
+.primary {
+  background: var(--leaf);
+  color: white;
+  border-color: transparent;
+}
+
+.primary:hover {
+  background: var(--leaf-dark);
+}
+
+.secondary {
+  background: rgba(255, 255, 255, 0.54);
+  color: var(--ink);
+}
+
+.summary {
+  display: grid;
+  gap: 18px;
+}
+
+.summaryPanel,
+.dashboardPanel {
+  padding: 18px;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  margin: 16px 0 20px;
+}
+
+.stats > div,
+.recentItem,
+.correlationCard {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.48);
+  padding: 13px;
+}
+
+.stats strong {
+  display: block;
+  margin-top: 4px;
+  font-size: 1.5rem;
+}
+
+.calendarHead {
+  margin-bottom: 10px;
+  color: var(--leaf-dark);
+  font-weight: 820;
+}
+
+.weekdays,
+.calendarGrid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+}
+
+.weekdays {
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 760;
+  text-align: center;
+  margin-bottom: 6px;
+}
+
+.dayCell {
+  aspect-ratio: 1;
+  min-width: 0;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.46);
+  color: var(--ink);
+  font-size: 0.72rem;
+  font-weight: 780;
+  display: grid;
+  place-items: center;
+}
+
+.dayCell.isSelected {
+  outline: 2px solid rgba(63, 111, 93, 0.5);
+}
+
+.dayCell.isEmpty {
+  opacity: 0;
+}
+
+.weeklyPreview {
+  display: grid;
+  gap: 14px;
+  margin-top: 14px;
+}
+
+.weekOutcomeStats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.weekOutcomeStats > div {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.48);
+  padding: 11px;
+}
+
+.weekOutcomeStats strong {
+  display: block;
+  margin-top: 4px;
+  font-size: 1.15rem;
+}
+
+.weekDots {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+}
+
+.weekDot {
+  aspect-ratio: 1;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  color: var(--ink);
+  font-size: 0.74rem;
+  font-weight: 820;
+}
+
+.dashboardGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+.dashboardPanel {
+  min-height: 284px;
+}
+
+.widePanel {
+  grid-column: 1 / -1;
+  min-height: 220px;
+}
+
+.moodBars {
+  display: grid;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.barRow {
+  display: grid;
+  grid-template-columns: 110px minmax(0, 1fr) 54px;
+  gap: 12px;
+  align-items: center;
+}
+
+.barLabel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--ink);
+  font-size: 0.86rem;
+  font-weight: 780;
+}
+
+.chip {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.barTrack {
+  height: 14px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.barFill {
+  height: 100%;
+  border-radius: inherit;
+}
+
+.barValue {
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 760;
+  text-align: right;
+}
+
+.trendChart {
+  margin-top: 18px;
+  min-height: 210px;
+}
+
+.trendChart svg,
+.scatterChart svg {
+  width: 100%;
+  height: 220px;
+  overflow: visible;
+}
+
+.chartAxis {
+  stroke: rgba(69, 86, 76, 0.18);
+  stroke-width: 1;
+}
+
+.chartLineStress {
+  fill: none;
+  stroke: var(--rose);
+  stroke-width: 3;
+}
+
+.chartLineEnergy {
+  fill: none;
+  stroke: var(--sky);
+  stroke-width: 3;
+}
+
+.chartPointStress {
+  fill: var(--rose);
+}
+
+.chartPointEnergy {
+  fill: var(--sky);
+}
+
+.axisLabel {
+  fill: var(--muted);
+  font-size: 12px;
+  font-weight: 760;
+}
+
+.legend {
+  display: flex;
+  gap: 16px;
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 760;
+  margin-top: 8px;
+}
+
+.legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.correlationGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.correlationCard {
+  min-height: 126px;
+}
+
+.correlationPair {
+  color: var(--muted);
+  font-size: 0.84rem;
+  font-weight: 760;
+}
+
+.correlationValue {
+  display: block;
+  margin-top: 8px;
+  font-size: 2.1rem;
+  line-height: 1;
+}
+
+.correlationText {
+  display: block;
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 700;
+  line-height: 1.32;
+}
+
+.pieWrap {
+  display: grid;
+  grid-template-columns: 210px minmax(0, 1fr);
+  align-items: center;
+  gap: 28px;
+  margin-top: 22px;
+}
+
+.pieChart {
+  width: 210px;
+  height: 210px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.72);
+  position: relative;
+}
+
+.pieChart::after {
+  content: "";
+  position: absolute;
+  inset: 48px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.76);
+  border: 1px solid var(--line);
+}
+
+.emptyPie {
+  background: rgba(255, 255, 255, 0.45);
+}
+
+.pieLegend {
+  display: grid;
+  gap: 10px;
+}
+
+.pieLegendRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  color: var(--ink);
+  font-size: 0.88rem;
+  font-weight: 780;
+}
+
+.pieLegendRow span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.scatterChart,
+.weeklyChart {
+  margin-top: 18px;
+  min-height: 230px;
+}
+
+.scatterChart circle {
+  opacity: 0.88;
+  stroke: rgba(255, 255, 255, 0.72);
+  stroke-width: 2;
+}
+
+.weeklyBars {
+  height: 190px;
+  display: flex;
+  align-items: end;
+  gap: 18px;
+  padding: 12px 10px 0;
+  border-bottom: 1px solid rgba(69, 86, 76, 0.18);
+}
+
+.weeklyBarGroup {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  display: grid;
+  grid-template-rows: 1fr 22px;
+  align-items: end;
+  gap: 8px;
+}
+
+.verticalBars {
+  height: 100%;
+  display: flex;
+  align-items: end;
+  justify-content: center;
+  gap: 5px;
+}
+
+.verticalBar {
+  width: 16px;
+  min-height: 4px;
+  border-radius: 999px 999px 0 0;
+}
+
+.moodBar {
+  background: var(--lavender);
+}
+
+.stressBar {
+  background: var(--rose);
+}
+
+.energyBar {
+  background: var(--sky);
+}
+
+.weekLabel {
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 780;
+  text-align: center;
+}
+
+.namajReportCards {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.reportCard {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.5);
+  padding: 14px;
+}
+
+.reportCard span {
+  display: block;
+  color: var(--muted);
+  font-size: 0.8rem;
+  font-weight: 760;
+}
+
+.reportCard strong {
+  display: block;
+  margin-top: 8px;
+  font-size: 1.55rem;
+}
+
+.prayerChart {
+  display: grid;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.prayerRow {
+  display: grid;
+  grid-template-columns: 92px minmax(0, 1fr) 54px;
+  align-items: center;
+  gap: 12px;
+}
+
+.prayerRow span,
+.prayerRow strong {
+  color: var(--ink);
+  font-size: 0.86rem;
+  font-weight: 800;
+}
+
+.prayerRow strong {
+  text-align: right;
+}
+
+.prayerFill {
+  background: var(--leaf);
+}

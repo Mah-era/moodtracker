@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mahera's Mood</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="cornerActions" aria-label="Data actions">
+    <button class="iconButton" id="exportBtn" type="button" title="Export JSON" aria-label="Export JSON">
+      <span aria-hidden="true">↓</span>
+    </button>
+    <label class="iconButton fileButton" title="Import JSON" aria-label="Import JSON">
+      <span aria-hidden="true">↑</span>
+      <input id="importInput" type="file" accept="application/json,.json">
+    </label>
+  </div>
+
+  <main class="shell" aria-labelledby="appTitle">
+    <header class="appHeader">
+      <div class="topbar">
+        <div>
+          <p class="eyebrow" id="todayLabel"></p>
+          <h1 id="appTitle">Mahera's Mood</h1>
+        </div>
+        <nav class="pageTabs" aria-label="Pages">
+          <button class="tabButton isActive" id="checkinTab" type="button">Check-in</button>
+          <button class="tabButton" id="dashboardTab" type="button">Dashboard</button>
+        </nav>
+      </div>
+    </header>
+
+    <section class="page isActive" id="checkinPage" aria-label="Daily mood check-in">
+      <div class="app">
+        <section class="checkin">
+          <div class="dateStrip" aria-label="Choose a day">
+            <button class="dateNav" id="prevDayBtn" type="button" aria-label="Previous day">‹</button>
+            <button class="selectedDate" id="dateButton" type="button"></button>
+            <button class="dateNav" id="nextDayBtn" type="button" aria-label="Next day">›</button>
+          </div>
+
+          <div class="softPanel">
+            <div class="sectionHeader">
+              <h2>How are you feeling?</h2>
+              <span id="saveState" role="status" aria-live="polite">Not saved yet</span>
+            </div>
+
+            <div class="moodGrid" id="moodGrid" aria-label="Mood choices"></div>
+
+            <div class="meterGroup">
+              <div class="meterCard">
+                <div class="meterTop">
+                  <label for="stressRange">Stress</label>
+                  <strong id="stressValue">3</strong>
+                </div>
+                <input id="stressRange" type="range" min="1" max="5" value="3">
+                <div class="scaleLabels"><span>Low</span><span>High</span></div>
+              </div>
+
+              <div class="meterCard">
+                <div class="meterTop">
+                  <label for="energyRange">Energy</label>
+                  <strong id="energyValue">3</strong>
+                </div>
+                <input id="energyRange" type="range" min="1" max="5" value="3">
+                <div class="scaleLabels"><span>Low</span><span>High</span></div>
+              </div>
+            </div>
+
+            <div class="namajBlock">
+              <div class="sectionHeader">
+                <h2>Namaj tracker</h2>
+                <span id="namajCount">0 / 5 completed</span>
+              </div>
+              <div class="namajPills" id="namajPills" aria-label="Daily Namaj tracker"></div>
+            </div>
+
+            <div class="entryActions">
+              <button class="primary" id="saveBtn" type="button">Save check-in</button>
+              <button class="secondary" id="clearBtn" type="button">Clear day</button>
+            </div>
+          </div>
+        </section>
+
+        <aside class="summary" aria-label="Mood summary">
+          <div class="summaryPanel">
+            <div class="sectionHeader">
+              <h2>This month</h2>
+              <span id="monthCount">0 days</span>
+            </div>
+
+            <div class="stats">
+              <div>
+                <span class="statLabel">Most common</span>
+                <strong id="commonMood">—</strong>
+              </div>
+              <div>
+                <span class="statLabel">Avg stress</span>
+                <strong id="avgStress">—</strong>
+              </div>
+              <div>
+                <span class="statLabel">Avg energy</span>
+                <strong id="avgEnergy">—</strong>
+              </div>
+            </div>
+
+            <div class="miniCalendar">
+              <div class="calendarHead" id="calendarHead"></div>
+              <div class="weekdays" aria-hidden="true">
+                <span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span>
+              </div>
+              <div class="calendarGrid" id="calendarGrid"></div>
+            </div>
+          </div>
+
+          <div class="summaryPanel">
+            <div class="sectionHeader">
+              <h2>Weekly outcome</h2>
+              <span id="weekRange">Selected week</span>
+            </div>
+            <div class="weeklyPreview" id="weeklyPreview"></div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="page dashboardPage" id="dashboardPage" aria-label="Dashboard">
+      <div class="dashboardGrid">
+        <div class="dashboardPanel chartPanel">
+          <div class="sectionHeader">
+            <div>
+              <h2>Month summary</h2>
+              <span class="panelSub" id="dashboardMonth"></span>
+            </div>
+            <span id="dashboardCount">0 logged days</span>
+          </div>
+          <div class="pieWrap" id="moodPie"></div>
+        </div>
+
+        <div class="dashboardPanel chartPanel">
+          <div class="sectionHeader">
+            <div>
+              <h2>Stress + energy trend</h2>
+              <span class="panelSub">Daily movement across saved days</span>
+            </div>
+          </div>
+          <div class="trendChart" id="trendChart"></div>
+        </div>
+
+        <div class="dashboardPanel chartPanel">
+          <div class="sectionHeader">
+            <div>
+              <h2>Mood + stress map</h2>
+              <span class="panelSub">Each dot is a saved day</span>
+            </div>
+          </div>
+          <div class="scatterChart" id="scatterChart"></div>
+        </div>
+
+        <div class="dashboardPanel chartPanel">
+          <div class="sectionHeader">
+            <div>
+              <h2>Weekly outcomes</h2>
+              <span class="panelSub">Average mood, stress, and energy by week</span>
+            </div>
+          </div>
+          <div class="weeklyChart" id="weeklyChart"></div>
+        </div>
+
+        <div class="dashboardPanel widePanel">
+          <div class="sectionHeader">
+            <div>
+              <h2>Correlation analysis</h2>
+              <span class="panelSub">Mood is scored 1-5. Namaj is daily completion percentage.</span>
+            </div>
+          </div>
+          <div class="correlationGrid" id="correlationGrid"></div>
+        </div>
+
+        <div class="dashboardPanel widePanel">
+          <div class="sectionHeader">
+            <div>
+              <h2>Namaj final report</h2>
+              <span class="panelSub" id="namajReportMonth"></span>
+            </div>
+          </div>
+          <div class="namajReportCards" id="namajReportCards"></div>
+          <div class="prayerChart" id="prayerChart"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <input class="hiddenDate" id="dateInput" type="date" aria-label="Select date">
+  <script src="app.js"></script>
+</body>
+</html>
