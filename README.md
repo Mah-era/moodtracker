@@ -2,6 +2,8 @@
 
 Mahera's Mood is a self-initiated offline mood and habit analytics prototype built with HTML, CSS, and JavaScript. It tracks mood, stress, energy, and daily Namaj completion, then turns the entries into interactive monthly dashboards and personal insight views.
 
+**Live Demo:** https://moodtracker-analysis.netlify.app/
+
 ## Highlights
 
 - Tracks 5 mood states: Heavy, Tender, Steady, Bright, and Peaceful.
@@ -14,4 +16,3 @@ Mahera's Mood is a self-initiated offline mood and habit analytics prototype bui
 ## Status
 
 Prototype stage. This is a local/offline personal analytics project, not a launched product.
-
