@@ -1,4 +1,5 @@
 const STORAGE_KEY = "moodGarden.entries.v1";
+const moodAnalytics = window.MOOD_ANALYTICS;
 
 const moods = [
   { id: "heavy", name: "Heavy", color: "#d98880", score: 1 },
@@ -47,6 +48,11 @@ const els = {
   scatterChart: document.querySelector("#scatterChart"),
   weeklyChart: document.querySelector("#weeklyChart"),
   correlationGrid: document.querySelector("#correlationGrid"),
+  weeklyInsightRange: document.querySelector("#weeklyInsightRange"),
+  weeklySample: document.querySelector("#weeklySample"),
+  streakCards: document.querySelector("#streakCards"),
+  trendSummary: document.querySelector("#trendSummary"),
+  weeklyCorrelations: document.querySelector("#weeklyCorrelations"),
   namajReportMonth: document.querySelector("#namajReportMonth"),
   namajReportCards: document.querySelector("#namajReportCards"),
   prayerChart: document.querySelector("#prayerChart"),
@@ -529,6 +535,32 @@ function renderCorrelations(monthData) {
 
 }
 
+function trendSentence(label, trend) {
+  if (trend.delta === null) return `${label} needs entries in both weeks.`;
+  if (trend.direction === "steady") return `${label} held steady at ${trend.current}.`;
+  const direction = trend.direction === "up" ? "increased" : "decreased";
+  const outcome = trend.improving ? "a helpful shift" : "worth watching";
+  return `${label} ${direction} by ${Math.abs(trend.delta).toFixed(1)} to ${trend.current} — ${outcome}.`;
+}
+
+function renderWeeklyIntelligence() {
+  const insights = moodAnalytics.buildWeeklyInsights(entries, selectedDate, moodScore, completedNamajCount, prayers.length);
+  els.weeklySample.textContent = `${insights.sampleSize} logged day${insights.sampleSize === 1 ? "" : "s"}`;
+  els.weeklyInsightRange.textContent = `7 days ending ${formatDate(selectedDate, "short")} vs previous 7 days`;
+  const streaks = [
+    ["Check-ins", insights.streaks.checkins.current, insights.streaks.checkins.best],
+    ["Bright / peaceful", insights.streaks.positive.current, insights.streaks.positive.best],
+    ["All 5 Namaj", insights.streaks.perfectNamaj.current, insights.streaks.perfectNamaj.best]
+  ];
+  els.streakCards.innerHTML = streaks.map(([label, current, best]) => `<div class="insightCard"><span>${label}</span><strong>${current} day${current === 1 ? "" : "s"}</strong><small>Current · best ${best}</small></div>`).join("");
+  els.trendSummary.innerHTML = [
+    trendSentence("Mood", insights.trends.mood),
+    trendSentence("Stress", insights.trends.stress),
+    trendSentence("Energy", insights.trends.energy)
+  ].map((text) => `<div class="insightCard narrative"><span>${text}</span></div>`).join("");
+  els.weeklyCorrelations.innerHTML = insights.correlations.map((item) => `<div class="insightCard"><span>${item.pair}</span><strong>${item.value === null ? "—" : item.value.toFixed(2)}</strong><small>${describeCorrelation(item.value)}</small></div>`).join("");
+}
+
 function currentMonthDays() {
   const date = fromYmd(selectedDate);
   const year = date.getFullYear();
@@ -597,6 +629,7 @@ function renderDashboard() {
   renderScatterChart(monthData);
   renderWeeklyChart(monthData);
   renderCorrelations(monthData);
+  renderWeeklyIntelligence();
   renderNamajReport();
 }
 

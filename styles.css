@@ -491,6 +491,36 @@ input[type="range"] {
   min-height: 220px;
 }
 
+.weeklyInsightLayout {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 18px;
+}
+
+.weeklyInsightLayout h3 {
+  margin: 0 0 9px;
+  color: var(--leaf-dark);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.insightCards { display: grid; gap: 8px; }
+.insightCard {
+  min-height: 82px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.52);
+}
+.insightCard span,
+.insightCard small { display: block; color: var(--muted); font-size: 0.78rem; font-weight: 720; line-height: 1.4; }
+.insightCard strong { display: block; margin: 5px 0; color: var(--ink); font-size: 1.3rem; }
+.insightCard.narrative { min-height: 62px; display: grid; align-items: center; }
+.insightCard.narrative span { color: var(--ink); }
+#weeklySample { color: var(--muted); font-size: 0.82rem; font-weight: 720; }
+
 .moodBars {
   display: grid;
   gap: 12px;
